@@ -14,7 +14,7 @@ AXIS_UP_DOWN_INVERTED = True # Set this to True if up and down appear to be swap
 AXIS_LEFT_RIGHT = 0 # Joystick axis to read for left / right position
 AXIS_LEFT_RIGHT_INVERTED = True # Set this to True if left and right appear to be swapped
 BUTTON_FAST_TURN = 9 # Joystick button number for turning fast (R2)
-INTERVAL = 0.00 # Time between updates in seconds, smaller responds faster but uses more processor time
+INTERVAL = 0.10 # Time between updates in seconds, smaller responds faster but uses more processor time
 TURN_MULTIPLIER = 0.4
 
 
