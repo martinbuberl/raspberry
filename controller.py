@@ -21,7 +21,7 @@ BUTTON_L2 = 6
 BUTTON_R1 = 5
 BUTTON_R2 = 7
 
-INTERVAL = 0.50 # Time between updates in seconds, smaller responds faster but uses more processor time
+INTERVAL = 0.00 # Time between updates in seconds, smaller responds faster but uses more processor time
 TURN_MULTIPLIER = 0.4
 
 
