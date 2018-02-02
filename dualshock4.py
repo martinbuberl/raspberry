@@ -122,7 +122,9 @@ def controller_events():
 
                         drive_right = drive_right * (1.0 + (1.0 * left_right))
                         drive_left = drive_left - drive_right * TURN_MULTIPLIER
-                    print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
+
+                    if drive_left != 1.00 or drive_right != 1.00:
+                        print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
 
 
                     # Set the motors to the new speeds
