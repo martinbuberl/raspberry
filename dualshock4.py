@@ -64,14 +64,14 @@ def controller_events():
             events = pygame.event.get()
             # Handle each event individually
             for event in events:
-                print("event:{}".format(event.type))
+                #print("event:{}".format(event.type))
 
                 # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP sJOYHATMOTION
                 if event.type == pygame.JOYAXISMOTION:
-                    print("Joystick has been moved")
+                    #print("Joystick has been moved")
                     had_event = True
                 elif event.type == pygame.JOYBUTTONDOWN:
-                    print("Joystick button pressed")
+                    #print("Joystick button pressed")
                     had_event = True
 
                 if had_event:
@@ -81,7 +81,9 @@ def controller_events():
                         throttle = up_down - 1
                         if throttle < -1.0:
                             throttle = -1.0
-                        print("throttle : {0} ".format(throttle))
+
+                        if throttle != -1.0:
+                            print("throttle : {0} ".format(throttle))
                     else:
                         up_down = JOYSTICK.get_axis(AXIS_R2)
                     if AXIS_LEFT_RIGHT_INVERTED:
@@ -120,7 +122,7 @@ def controller_events():
 
                         drive_right = drive_right * (1.0 + (1.0 * left_right))
                         drive_left = drive_left - drive_right * TURN_MULTIPLIER
-                    #print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
+                    print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
 
 
                     # Set the motors to the new speeds
