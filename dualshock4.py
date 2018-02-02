@@ -6,7 +6,7 @@ os.environ["SDL_VIDEODRIVER"] = "dummy"
 pygame.init()
 
 # Used to manage how fast the screen updates
-clock = pygame.time.Clock()
+#clock = pygame.time.Clock()
 
 # Initialize the joysticks
 pygame.joystick.init()
@@ -26,7 +26,7 @@ while True:
     # Get count of joysticks
     joystick_count = pygame.joystick.get_count()
 
-    #print("Number of joysticks: {}".format(joystick_count))
+
 
     # For each joystick:
     for i in range(joystick_count):
@@ -70,7 +70,7 @@ while True:
     #pygame.display.flip()
 
     # Limit to 20 frames per second
-    clock.tick(20)
+    #clock.tick(20)
 
 # Close the window and quit.
 # If you forget this line, the program will 'hang'
