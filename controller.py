@@ -68,7 +68,7 @@ def controller_events():
                         print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
 
                     R2_axis = JOYSTICK.get_axis(4)
-                    if R2_axis != 1:
+                    if R2_axis != -1: # release -> -1, half => 0, full press -> 1
                         print("R2_axis axis={:>6.3f}".format(R2_axis))
 
                 elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
@@ -77,15 +77,7 @@ def controller_events():
                     print("R2 released")
 
 #                if had_event == False:
-#                    # Read axis positions (-1 to +1)
-#                    if AXIS_UP_DOWN_INVERTED:
-#                        up_down = -JOYSTICK.get_axis(AXIS_R2)  # release --> 1     half 0     full press --> -1
-#                        throttle = up_down - 1
-#                        if throttle < -1.0:
-#                            throttle = -1.0
-#
-#                        if throttle != -1.0:
-#                            print("throttle : {0} ".format(throttle))
+
 #                    else:
 #                        up_down = JOYSTICK.get_axis(AXIS_R2)
 #                    if AXIS_LEFT_RIGHT_INVERTED:
