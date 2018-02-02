@@ -63,12 +63,16 @@ def controller_events():
             for event in events:
                 # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP sJOYHATMOTION
                 if event.type == pygame.JOYAXISMOTION:
-                    print("Joystick has been moved")
-                    print(JOYSTICK.get_axis(AXIS_R2))
-                    print(JOYSTICK.get_axis(AXIS_L2))
+                    #print("Joystick has been moved")
+                    #print(JOYSTICK.get_axis(AXIS_R2))
+                    #print(JOYSTICK.get_axis(AXIS_L2))
                     had_event = True
+                elif event.type == pygame.JOYBALLMOTION:
+                    print("Joyball has been moved")
+                    print("{}".format(JOYSTICK.get_ball(0)))
                 elif event.type == pygame.JOYBUTTONDOWN:
-                    #print("Joystick button pressed")
+                    print("Joystick button pressed")
+                    print("{}".format(JOYSTICK.get_button(0)))
                     had_event = True
                 elif event.type == pygame.JOYBUTTONUP:
                     #print("Joystick button released")
