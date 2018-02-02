@@ -97,12 +97,12 @@ def RobotControl():
                         leftRight *= 1
 
                     # Determine the drive power levels
-                    if joystick.get_button(axisL2): # to REVERSE the car
-                        driveLeft = throttle
-                        driveRight = throttle
-                    else:                                   # to move FORWARD
-                        driveLeft = -throttle
-                        driveRight = -throttle
+                    #if joystick.get_button(axisL2): # to REVERSE the car
+                    #    driveLeft = throttle
+                    #    driveRight = throttle
+                    #else:                                   # to move FORWARD
+                    #    driveLeft = -throttle
+                    #    driveRight = -throttle
 
                     if leftRight < -0.05:
                         # Turning right
