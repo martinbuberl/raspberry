@@ -1,3 +1,4 @@
+# encoding=utf8
 import time
 import os
 import sys
@@ -11,7 +12,7 @@ def Dualshock4Init():
     os.environ["SDL_VIDEODRIVER"] = "dummy" # Removes the need to have a GUI window
     pygame.init()
 
-    print 'Waiting for joystick... (press CTRL+C to abort)'
+    print("Waiting for joystick... (press CTRL+C to abort)")
 
     while True:
         try:
@@ -32,7 +33,7 @@ def Dualshock4Init():
                 time.sleep(0.1)
         except KeyboardInterrupt:
             # CTRL+C exit, give up
-            print '\nUser aborted'
+            print("\nUser aborted")
             sys.exit()
     print 'Joystick found'
     joystick.init()
