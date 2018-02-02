@@ -35,7 +35,7 @@ def Dualshock4Init():
             # CTRL+C exit, give up
             print("\nUser aborted")
             sys.exit()
-    print 'Joystick found'
+    print("Joystick found")
     joystick.init()
 
 Dualshock4Init()
