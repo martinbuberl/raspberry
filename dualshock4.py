@@ -47,6 +47,8 @@ def Dualshock4Init():
             print("\nUser aborted")
             sys.exit()
     print("Joystick found: {}".format(joystick.get_name()))
+    joystick.init()
+
     axes = joystick.get_numaxes() # Usually axis run in pairs, up/down for one, and left/right for the other
     print("Number of axes: {}".format(axes))
     for i in range( axes ):
@@ -62,7 +64,6 @@ def Dualshock4Init():
     for i in range( hats ):
         hat = joystick.get_hat( i )
         print("Hat {} value: {}".format(i, str(hat)))
-    joystick.init()
 
 
 def RobotControl():
