@@ -59,22 +59,22 @@ def controller_events():
         left_right = 0.0
 
         while True:
-            # Get the latest events from the system
-            had_event = False
             events = pygame.event.get()
-            # Handle each event individually
             for event in events:
-                #print("event:{}".format(event.type))
-
                 # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP sJOYHATMOTION
                 if event.type == pygame.JOYAXISMOTION:
-                    #print("Joystick has been moved")
+                    print("Joystick has been moved")
+                    print(JOYSTICK.get_axis(AXIS_R2))
+                    print(JOYSTICK.get_axis(AXIS_L2))
                     had_event = True
                 elif event.type == pygame.JOYBUTTONDOWN:
                     #print("Joystick button pressed")
                     had_event = True
+                elif event.type == pygame.JOYBUTTONUP:
+                    #print("Joystick button released")
+                    had_event = True
 
-                if had_event:
+                if had_event == False:
                     # Read axis positions (-1 to +1)
                     if AXIS_UP_DOWN_INVERTED:
                         up_down = -JOYSTICK.get_axis(AXIS_R2)  # release --> 1     half 0     full press --> -1
@@ -83,7 +83,7 @@ def controller_events():
                             throttle = -1.0
 
                         if throttle != -1.0:
-                            print("throttle : {0} ".format(throttle))
+                            #print("throttle : {0} ".format(throttle))
                     else:
                         up_down = JOYSTICK.get_axis(AXIS_R2)
                     if AXIS_LEFT_RIGHT_INVERTED:
@@ -105,26 +105,15 @@ def controller_events():
 
                     if left_right < -0.05:
                         # Turning right
-                        #IN1.on()
-                        #IN2.off()
-                        #IN3.off()
-                        #IN4.on()
-
                         drive_left = drive_left * (1.0 - (1.0 * left_right))
                         drive_right = drive_right - drive_left * TURN_MULTIPLIER
                     elif left_right > 0.05:
                         # Turning left
-
-                        #IN1.off()
-                        #IN2.on()
-                        #IN3.on()
-                        #IN4.off()
-
                         drive_right = drive_right * (1.0 + (1.0 * left_right))
                         drive_left = drive_left - drive_right * TURN_MULTIPLIER
 
                     if drive_left != 1.00 or drive_right != 1.00:
-                        print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
+                        #print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
 
 
                     # Set the motors to the new speeds
