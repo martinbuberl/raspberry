@@ -14,7 +14,7 @@ AXIS_UP_DOWN_INVERTED = True # Set this to True if up and down appear to be swap
 AXIS_LEFT_RIGHT = 0 # Joystick axis to read for left / right position
 AXIS_LEFT_RIGHT_INVERTED = True # Set this to True if left and right appear to be swapped
 BUTTON_FAST_TURN = 9 # Joystick button number for turning fast (R2)
-INTERVAL = 0.10 # Time between updates in seconds, smaller responds faster but uses more processor time
+INTERVAL = 0.50 # Time between updates in seconds, smaller responds faster but uses more processor time
 TURN_MULTIPLIER = 0.4
 
 
@@ -63,22 +63,34 @@ def controller_events():
             for event in events:
                 # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP sJOYHATMOTION
                 if event.type == pygame.JOYAXISMOTION:
-                    #print("Joystick has been moved")
+                    print("Joystick has been moved")
                     #print(JOYSTICK.get_axis(AXIS_R2))
                     #print(JOYSTICK.get_axis(AXIS_L2))
-                    had_event = True
-                elif event.type == pygame.JOYBALLMOTION:
-                    print("Joyball has been moved")
-                    print("{}".format(JOYSTICK.get_ball(0)))
+
+                    axes = JOYSTICK.get_numaxes()
+                    print("Number of axes: {}".format(axes))
+                    for i in range( axes ):
+                        axis = JOYSTICK.get_axis( i )
+                        print("Axis {} value: {:>6.3f}".format(i, axis))
                 elif event.type == pygame.JOYBUTTONDOWN:
                     if JOYSTICK.get_button(0):
                         print("Square button pressed")
                     if JOYSTICK.get_button(1):
-                        print("1 button pressed")
+                        print("Cross button pressed")
                     if JOYSTICK.get_button(2):
-                        print("2 button pressed")
+                        print("Circle button pressed")
                     if JOYSTICK.get_button(3):
-                        print("3 button pressed")
+                        print("Triangle button pressed")
+                    if JOYSTICK.get_button(4):
+                        print("4 button pressed")
+                    if JOYSTICK.get_button(5):
+                        print("5 button pressed")
+                    if JOYSTICK.get_button(6):
+                        print("6 button pressed")
+                    if JOYSTICK.get_button(7):
+                        print("7 button pressed")
+                    if JOYSTICK.get_button(8):
+                        print("7 button pressed")
                 elif event.type == pygame.JOYBUTTONUP:
                     #print("Joystick button released")
                     had_event = True
