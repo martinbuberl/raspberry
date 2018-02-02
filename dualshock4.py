@@ -67,11 +67,17 @@ def controller_events():
                     #print(JOYSTICK.get_axis(AXIS_R2))
                     #print(JOYSTICK.get_axis(AXIS_L2))
 
-                    axes = JOYSTICK.get_numaxes()
-                    print("Number of axes: {}".format(axes))
-                    for i in range( axes ):
-                        axis = JOYSTICK.get_axis( i )
-                        print("Axis {} value: {:>6.3f}".format(i, axis))
+                    left_analog_x = JOYSTICK.get_axis(0)
+                    left_analog_y = JOYSTICK.get_axis(1)
+
+                    if left_analog_x != 0 or left_analog_y != 0:
+                        print("Left analog stick x={:>6.3f}, y={:>6.3f}".format(left_analog_x, left_analog_y))
+
+                    right_analog_x = JOYSTICK.get_axis(2)
+                    right_analog_y = JOYSTICK.get_axis(5)
+
+                    if right_analog_x != 0 or right_analog_y != 0:
+                        print("Right analog stick x={:>6.3f}, y={:>6.3f}".format(right_analog_x, right_analog_y))
                 elif event.type == pygame.JOYBUTTONDOWN:
                     if JOYSTICK.get_button(0):
                         print("Square button pressed")
