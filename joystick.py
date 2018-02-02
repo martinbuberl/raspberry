@@ -1,4 +1,7 @@
 import pygame
+import os
+
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 # Define some colors
 BLACK    = (   0,   0,   0)
