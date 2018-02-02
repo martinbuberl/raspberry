@@ -56,53 +56,53 @@ def RobotControl():
         print("Press CTRL+C to quit")
         driveLeft = 0.0
         driveRight = 0.0
-        running = True
-        hadEvent = False
+        #running = True
+        #hadEvent = False
         upDown = 0.0
         leftRight = 0.0
         # Loop indefinitely
-        while running:
+        while True:
             # Get the latest events from the system
-            hadEvent = False
+            had_event = False
             events = pygame.event.get()
             # Handle each event individually
             for event in events:
                 print("event:{}".format(event.type))
-                if event.type == pygame.QUIT:
-                    # User exit
-                    running = False
+
+                # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP sJOYHATMOTION
+                if event.type == pygame.JOYAXISMOTION:
+                    print("Joystick has been moved")
+                    had_event = True
                 elif event.type == pygame.JOYBUTTONDOWN:
-                    # A button on the joystick just got pushed down
-                    hadEvent = True
-                elif event.type == pygame.JOYAXISMOTION:
-                    # A joystick has been moved
-                    hadEvent = True
-                if hadEvent:
+                    print("Joystick button pressed")
+                    had_event = True
+
+                if had_event:
                     # Read axis positions (-1 to +1)
-                    #if axisUpDownInverted:
-                    #    upDown = -joystick.get_axis(axisR2)  # release --> 1     half 0     full press --> -1
-                    #    throttle = upDown - 1
-                    #    if throttle < -1.0:
-                    #        throttle = -1.0
-                    #    print("throttle : {0} ".format(throttle))
-                    #else:
-                    #    upDown = joystick.get_axis(axisR2)
-                    #if axisLeftRightInverted:
-                    #    leftRight = -joystick.get_axis(axisLeftRight)
-                    #    print("leftRight : {}".format(leftRight))
-                    #else:
-                    #    leftRight = joystick.get_axis(axisLeftRight)
+                    if axisUpDownInverted:
+                        upDown = -joystick.get_axis(axisR2)  # release --> 1     half 0     full press --> -1
+                        throttle = upDown - 1
+                        if throttle < -1.0:
+                            throttle = -1.0
+                        print("throttle : {0} ".format(throttle))
+                    else:
+                        upDown = joystick.get_axis(axisR2)
+                    if axisLeftRightInverted:
+                        leftRight = -joystick.get_axis(axisLeftRight)
+                        print("leftRight : {}".format(leftRight))
+                    else:
+                        leftRight = joystick.get_axis(axisLeftRight)
                     # Apply steering speeds
                     if not joystick.get_button(buttonFastTurn):
                         leftRight *= 1
 
                     # Determine the drive power levels
-                    #if joystick.get_button(axisL2): # to REVERSE the car
-                    #    driveLeft = throttle
-                    #    driveRight = throttle
-                    #else:                                   # to move FORWARD
-                    #    driveLeft = -throttle
-                    #    driveRight = -throttle
+                    if joystick.get_button(axisL2): # to REVERSE the car
+                        driveLeft = throttle
+                        driveRight = throttle
+                    else:                                   # to move FORWARD
+                        driveLeft = -throttle
+                        driveRight = -throttle
 
                     if leftRight < -0.05:
                         # Turning right
@@ -151,11 +151,8 @@ RobotControl()
 #        if event.type == pygame.QUIT: # If user clicked close
 #            done=True # Flag that we are done so we exit this loop
 
-        # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP JOYHATMOTION
-#        if event.type == pygame.JOYBUTTONDOWN:
-#            print("Joystick button pressed.")
-#        if event.type == pygame.JOYBUTTONUP:
-#            print("Joystick button released.")
+
+
 
     # Get count of joysticks
 #    joystick_count = pygame.joystick.get_count()
@@ -198,15 +195,4 @@ RobotControl()
 #            hat = joystick.get_hat( i )
 #            #print("Hat {} value: {}".format(i, str(hat)))
 #
-#    # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
-#
-#    # Go ahead and update the screen with what we've drawn.
-#    #pygame.display.flip()
-#
-#    # Limit to 20 frames per second
-#    #clock.tick(20)
-#
-## Close the window and quit.
-## If you forget this line, the program will 'hang'
-## on exit if running from IDLE.
-#pygame.quit ()
+
