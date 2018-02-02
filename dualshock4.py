@@ -8,12 +8,19 @@ import pygame
 
 global JOYSTICK
 
-AXIS_R2 = 4 # Joystick axis to read for up / down position
-AXIS_L2 = 6
-AXIS_UP_DOWN_INVERTED = True # Set this to True if up and down appear to be swapped
-AXIS_LEFT_RIGHT = 0 # Joystick axis to read for left / right position
-AXIS_LEFT_RIGHT_INVERTED = True # Set this to True if left and right appear to be swapped
-BUTTON_FAST_TURN = 9 # Joystick button number for turning fast (R2)
+ANALOG_LX_AXIS = 0 # Left analog stick x-axis to read the left (-1) / right (+1) position
+ANALOG_LY_AXIS = 1 # Left analog stick y-axis to read the up (-1) / down (+1) position
+ANALOG_RX_AXIS = 2
+ANALOG_RY_AXIS = 5
+BUTTON_SQUARE = 0
+BUTTON_CROSS = 1
+BUTTON_CIRCLE = 2
+BUTTON_TRIANGLE = 3
+BUTTON_L1 = 4
+BUTTON_L2 = 6
+BUTTON_R1 = 5
+BUTTON_R2 = 7
+
 INTERVAL = 0.50 # Time between updates in seconds, smaller responds faster but uses more processor time
 TURN_MULTIPLIER = 0.4
 
@@ -52,53 +59,35 @@ def controller_events():
     global JOYSTICK
 
     try:
-        print("Press CTRL+C to quit")
-        drive_left = 0.0
-        drive_right = 0.0
-        up_down = 0.0
-        left_right = 0.0
-
         while True:
-            events = pygame.event.get()
-            for event in events:
-                # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP sJOYHATMOTION
+            for event in pygame.event.get():
                 if event.type == pygame.JOYAXISMOTION:
-                    #print("Joystick has been moved")
-                    #print(JOYSTICK.get_axis(AXIS_R2))
-                    #print(JOYSTICK.get_axis(AXIS_L2))
-
-                    left_analog_x = JOYSTICK.get_axis(0)
-                    left_analog_y = JOYSTICK.get_axis(1)
-
-                    if left_analog_x != 0 or left_analog_y != 0:
-                        print("Left analog stick x={:>6.3f}, y={:>6.3f}".format(left_analog_x, left_analog_y))
-
-                    right_analog_x = JOYSTICK.get_axis(2)
-                    right_analog_y = JOYSTICK.get_axis(5)
-
-                    if right_analog_x != 0 or right_analog_y != 0:
-                        print("Right analog stick x={:>6.3f}, y={:>6.3f}".format(right_analog_x, right_analog_y))
+                    x_axis = JOYSTICK.get_axis(ANALOG_LX_AXIS)
+                    y_axis = JOYSTICK.get_axis(ANALOG_LY_AXIS)
+                    if x_axis != 0 or y_axis != 0:
+                        print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
                 elif event.type == pygame.JOYBUTTONDOWN:
-                    if JOYSTICK.get_button(0):
-                        print("Square button pressed")
-                    if JOYSTICK.get_button(1):
-                        print("Cross button pressed")
-                    if JOYSTICK.get_button(2):
-                        print("Circle button pressed")
-                    if JOYSTICK.get_button(3):
-                        print("Triangle button pressed")
-                    if JOYSTICK.get_button(4):
-                        print("4 button pressed")
-                    if JOYSTICK.get_button(5):
-                        print("5 button pressed")
-                    if JOYSTICK.get_button(6):
-                        print("6 button pressed")
-                    if JOYSTICK.get_button(7):
-                        print("7 button pressed")
-                    if JOYSTICK.get_button(8):
-                        print("7 button pressed")
+                    if JOYSTICK.get_button(BUTTON_SQUARE):
+                        print("Square pressed")
+                    if JOYSTICK.get_button(BUTTON_CROSS):
+                        print("Cross pressed")
+                    if JOYSTICK.get_button(BUTTON_CIRCLE):
+                        print("Circle pressed")
+                    if JOYSTICK.get_button(BUTTON_TRIANGLE):
+                        print("Triangle pressed")
+                    if JOYSTICK.get_button(BUTTON_L1):
+                        print("L1 pressed")
+                    if JOYSTICK.get_button(BUTTON_L2):
+                        print("L2 pressed")
+                    if JOYSTICK.get_button(BUTTON_R1):
+                        print("R1 pressed")
+                    if JOYSTICK.get_button(BUTTON_R2):
+                        print("R2 pressed")
                 elif event.type == pygame.JOYBUTTONUP:
-                    print("Joystick button released")
+                    if JOYSTICK.get_button(BUTTON_R1):
+                        print("R1 released")
+                    if JOYSTICK.get_button(BUTTON_R2):
+                        print("R2 released")
 
 #                if had_event == False:
 #                    # Read axis positions (-1 to +1)
