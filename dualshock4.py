@@ -1,30 +1,63 @@
-import pygame
+import time
 import os
+import sys
+import pygame
 
-os.environ["SDL_VIDEODRIVER"] = "dummy"
 
-pygame.init()
+def Dualshock4Init():
 
-# Used to manage how fast the screen updates
-#clock = pygame.time.Clock()
+    global joystick
+    # Setup pygame and wait for the joystick to become available
+    os.environ["SDL_VIDEODRIVER"] = "dummy" # Removes the need to have a GUI window
+    pygame.init()
 
-# Initialize the joysticks
-pygame.joystick.init()
+    print 'Waiting for joystick... (press CTRL+C to abort)'
 
-while True:
+    while True:
+        try:
+            try:
+                pygame.joystick.init()
+                # Attempt to setup the joystick
+                if pygame.joystick.get_count() < 1:
+                    # No joystick attached, toggle the LED
+                    pygame.joystick.quit()
+                    time.sleep(0.1)
+                else:
+                    # We have a joystick, attempt to initialise it!
+                    joystick = pygame.joystick.Joystick(0)
+                    break
+            except pygame.error:
+                # Failed to connect to the joystick, toggle the LED
+                pygame.joystick.quit()
+                time.sleep(0.1)
+        except KeyboardInterrupt:
+            # CTRL+C exit, give up
+            print '\nUser aborted'
+            sys.exit()
+    print 'Joystick found'
+    joystick.init()
+
+Dualshock4Init()
+
+#os.environ["SDL_VIDEODRIVER"] = "dummy"
+
+#pygame.init()
+#pygame.joystick.init()
+
+#while True:
     # EVENT PROCESSING STEP
-    for event in pygame.event.get(): # User did something
-        if event.type == pygame.QUIT: # If user clicked close
-            done=True # Flag that we are done so we exit this loop
+#    for event in pygame.event.get(): # User did something
+#        if event.type == pygame.QUIT: # If user clicked close
+#            done=True # Flag that we are done so we exit this loop
 
         # Possible joystick actions: JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP JOYHATMOTION
-        if event.type == pygame.JOYBUTTONDOWN:
-            print("Joystick button pressed.")
-        if event.type == pygame.JOYBUTTONUP:
-            print("Joystick button released.")
+#        if event.type == pygame.JOYBUTTONDOWN:
+#            print("Joystick button pressed.")
+#        if event.type == pygame.JOYBUTTONUP:
+#            print("Joystick button released.")
 
     # Get count of joysticks
-    joystick_count = pygame.joystick.get_count()
+#    joystick_count = pygame.joystick.get_count()
 
 
 
