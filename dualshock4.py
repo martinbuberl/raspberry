@@ -79,19 +79,19 @@ def RobotControl():
                     hadEvent = True
                 if hadEvent:
                     # Read axis positions (-1 to +1)
-                    if axisUpDownInverted:
-                        upDown = -joystick.get_axis(axisR2)  # release --> 1     half 0     full press --> -1
-                        throttle = upDown - 1
-                        if throttle < -1.0:
-                            throttle = -1.0
-                        print("throttle : {0} ".format(throttle))
-                    else:
-                        upDown = joystick.get_axis(axisR2)
-                    if axisLeftRightInverted:
-                        leftRight = -joystick.get_axis(axisLeftRight)
-                        print("leftRight : {}".format(leftRight))
-                    else:
-                        leftRight = joystick.get_axis(axisLeftRight)
+                    #if axisUpDownInverted:
+                    #    upDown = -joystick.get_axis(axisR2)  # release --> 1     half 0     full press --> -1
+                    #    throttle = upDown - 1
+                    #    if throttle < -1.0:
+                    #        throttle = -1.0
+                    #    print("throttle : {0} ".format(throttle))
+                    #else:
+                    #    upDown = joystick.get_axis(axisR2)
+                    #if axisLeftRightInverted:
+                    #    leftRight = -joystick.get_axis(axisLeftRight)
+                    #    print("leftRight : {}".format(leftRight))
+                    #else:
+                    #    leftRight = joystick.get_axis(axisLeftRight)
                     # Apply steering speeds
                     if not joystick.get_button(buttonFastTurn):
                         leftRight *= 1
