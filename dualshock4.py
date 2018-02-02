@@ -46,7 +46,7 @@ def Dualshock4Init():
             # CTRL+C exit, give up
             print("\nUser aborted")
             sys.exit()
-    print("Joystick found")
+    print("Joystick found: {}".format(joystick.get_name()))
     joystick.init()
 
 def RobotControl():
@@ -138,37 +138,12 @@ def RobotControl():
         print("shutting down...")
 
 Dualshock4Init()
-RobotControl()
-
-#os.environ["SDL_VIDEODRIVER"] = "dummy"
-
-#pygame.init()
-#pygame.joystick.init()
-
-#while True:
-    # EVENT PROCESSING STEP
-#    for event in pygame.event.get(): # User did something
-#        if event.type == pygame.QUIT: # If user clicked close
-#            done=True # Flag that we are done so we exit this loop
+#RobotControl()
 
 
 
 
-    # Get count of joysticks
-#    joystick_count = pygame.joystick.get_count()
-
-
-
-    # For each joystick:
-#    for i in range(joystick_count):
-#        joystick = pygame.joystick.Joystick(i)
-#        joystick.init()
 #
-#        #print("Joystick {}".format(i))
-#
-#        # Get the name from the OS for the controller/joystick
-#        name = joystick.get_name()
-#        #print("Joystick name: {}".format(name))
 #
 #        # Usually axis run in pairs, up/down for one, and left/right for
 #        # the other.
