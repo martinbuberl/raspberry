@@ -47,7 +47,23 @@ def Dualshock4Init():
             print("\nUser aborted")
             sys.exit()
     print("Joystick found: {}".format(joystick.get_name()))
+    axes = joystick.get_numaxes() # Usually axis run in pairs, up/down for one, and left/right for the other
+    print("Number of axes: {}".format(axes))
+    for i in range( axes ):
+        axis = joystick.get_axis( i )
+        print("Axis {} value: {:>6.3f}".format(i, axis))
+    buttons = joystick.get_numbuttons()
+    print("Number of buttons: {}".format(buttons))
+    for i in range( buttons ):
+        button = joystick.get_button( i )
+        print("Button {:>2} value: {}".format(i,button))
+    hats = joystick.get_numhats() # Hat switch. All or nothing for direction, not like joysticks. Value comes back in an array.
+    print("Number of hats: {}".format(hats))
+    for i in range( hats ):
+        hat = joystick.get_hat( i )
+        print("Hat {} value: {}".format(i, str(hat)))
     joystick.init()
+
 
 def RobotControl():
     global joystick
@@ -139,35 +155,3 @@ def RobotControl():
 
 Dualshock4Init()
 #RobotControl()
-
-
-
-
-#
-#
-#        # Usually axis run in pairs, up/down for one, and left/right for
-#        # the other.
-#        axes = joystick.get_numaxes()
-#        #print("Number of axes: {}".format(axes))
-#
-#        for i in range( axes ):
-#            axis = joystick.get_axis( i )
-#            #print("Axis {} value: {:>6.3f}".format(i, axis))
-#
-#        buttons = joystick.get_numbuttons()
-#        #print("Number of buttons: {}".format(buttons))
-#
-#        for i in range( buttons ):
-#            button = joystick.get_button( i )
-#            #print("Button {:>2} value: {}".format(i,button))
-#
-#        # Hat switch. All or nothing for direction, not like joysticks.
-#        # Value comes back in an array.
-#        hats = joystick.get_numhats()
-#        #print("Number of hats: {}".format(hats))
-#
-#        for i in range( hats ):
-#            hat = joystick.get_hat( i )
-#            #print("Hat {} value: {}".format(i, str(hat)))
-#
-
