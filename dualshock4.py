@@ -71,9 +71,14 @@ def controller_events():
                     print("Joyball has been moved")
                     print("{}".format(JOYSTICK.get_ball(0)))
                 elif event.type == pygame.JOYBUTTONDOWN:
-                    print("Joystick button pressed")
-                    print("{}".format(JOYSTICK.get_button(0)))
-                    had_event = True
+                    if JOYSTICK.get_button(0):
+                        print("Square button pressed")
+                    if JOYSTICK.get_button(1):
+                        print("1 button pressed")
+                    if JOYSTICK.get_button(2):
+                        print("2 button pressed")
+                    if JOYSTICK.get_button(3):
+                        print("3 button pressed")
                 elif event.type == pygame.JOYBUTTONUP:
                     #print("Joystick button released")
                     had_event = True
