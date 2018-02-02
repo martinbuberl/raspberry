@@ -8,10 +8,12 @@ import pygame
 
 global JOYSTICK
 
-ANALOG_LX_AXIS = 0 # Left analog stick x-axis to read the left (-1) / right (+1) position
-ANALOG_LY_AXIS = 1 # Left analog stick y-axis to read the up (-1) / down (+1) position
-ANALOG_RX_AXIS = 2
-ANALOG_RY_AXIS = 5
+AXIS_LSTICK_X = 0 # Left analog stick x-axis => left (-1) to right (+1)
+AXIS_LSTICK_Y = 1 # Left analog stick y-axis => up (-1) to down (+1)
+AXIS_RSTICK_X = 2 # Right analog stick x-axis => left (-1) to right (+1)
+AXIS_RSTICK_Y = 5 # Right analog stick y-axis => up (-1) to down (+1)
+AXIS_R2 = 4 # R2 button axis => release (-1) to half (0) to full (+1)
+AXIS_L2 = 6 # L2 button axis => release (-1) to half (0) to full (+1)
 BUTTON_SQUARE = 0
 BUTTON_CROSS = 1
 BUTTON_CIRCLE = 2
@@ -20,9 +22,6 @@ BUTTON_L1 = 4
 BUTTON_L2 = 6
 BUTTON_R1 = 5
 BUTTON_R2 = 7
-
-INTERVAL = 0.00 # Time between updates in seconds, smaller responds faster but uses more processor time
-TURN_MULTIPLIER = 0.4
 
 
 def controller_init():
@@ -58,67 +57,22 @@ def controller_init():
 def controller_events():
     global JOYSTICK
 
-    try:
-        while True:
-            for e in pygame.event.get():
-                if e.type == pygame.JOYAXISMOTION:
-                    x_axis = JOYSTICK.get_axis(ANALOG_LX_AXIS)
-                    y_axis = JOYSTICK.get_axis(ANALOG_LY_AXIS)
-                    if x_axis != 0 or y_axis != 0:
-                        print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
+    while True:
+        for e in pygame.event.get():
+            if e.type == pygame.JOYAXISMOTION:
+                axis_lstick_x = JOYSTICK.get_axis(AXIS_LSTICK_X)
+                if axis_lstick_x != 0:
+                    print("Left stick x-axis={:>6.3f}".format(axis_lstick_x))
 
-                    R2_axis = JOYSTICK.get_axis(4)
-                    #if R2_axis != -1: # release -> -1, half => 0, full press -> 1
-                    print("R2_axis axis={:>6.3f}".format(R2_axis))
+                axis_r2 = JOYSTICK.get_axis(AXIS_R2)
+                if axis_r2 > -1:
+                    print("R2 axis={:>6.3f}".format(AXIS_R2))
 
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
-                    print("R2 pressed")
-                elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R2:
-                    print("R2 released")
+            elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
+                print("R2 pressed")
+            elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R2:
+                print("R2 released")
 
-#                if had_event == False:
-
-#                    else:
-#                        up_down = JOYSTICK.get_axis(AXIS_R2)
-#                    if AXIS_LEFT_RIGHT_INVERTED:
-#                        left_right = -JOYSTICK.get_axis(AXIS_LEFT_RIGHT)
-#                        #print("left_right : {}".format(left_right))
-#                    else:
-#                        left_right = JOYSTICK.get_axis(AXIS_LEFT_RIGHT)
-#                    # Apply steering speeds
-#                    if not JOYSTICK.get_button(BUTTON_FAST_TURN):
-#                        left_right *= 1
-#
-#                    # Determine the drive power levels
-#                    if JOYSTICK.get_button(AXIS_L2): # to REVERSE the car
-#                        drive_left = throttle
-#                        drive_right = throttle
-#                    else:                                   # to move FORWARD
-#                        drive_left = -throttle
-#                        drive_right = -throttle
-#
-#                    if left_right < -0.05:
-#                        # Turning right
-#                        drive_left = drive_left * (1.0 - (1.0 * left_right))
-#                        drive_right = drive_right - drive_left * TURN_MULTIPLIER
-#                    elif left_right > 0.05:
-#                        # Turning left
-#                        drive_right = drive_right * (1.0 + (1.0 * left_right))
-#                        drive_left = drive_left - drive_right * TURN_MULTIPLIER
-#
-#                    if drive_left != 1.00 or drive_right != 1.00:
-#                        print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
-#
-#
-#                    # Set the motors to the new speeds
-#                    #ENA.value = driveLeft
-#                    #ENB.value = driveRight
-
-            # Wait for the interval period
-            time.sleep(INTERVAL) # default = 0
-
-    except KeyboardInterrupt:
-        sys.exit()
 
 controller_init()
 controller_events()
