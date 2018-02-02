@@ -64,26 +64,10 @@ def controller_events():
                 if e.type == pygame.JOYAXISMOTION:
                     x_axis = JOYSTICK.get_axis(ANALOG_LX_AXIS)
                     y_axis = JOYSTICK.get_axis(ANALOG_LY_AXIS)
-                    if x_axis != 0 or y_axis != 0:
-                        print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_SQUARE:
-                    print("Square pressed")
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_CROSS:
-                    print("Cross pressed")
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_CIRCLE:
-                    print("Circle pressed")
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_TRIANGLE:
-                    print("Triangle pressed")
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_L1:
-                    print("L1 pressed")
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_L2:
-                    print("L2 pressed")
-                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R1:
-                    print("R1 pressed")
+                    #if x_axis != 0 or y_axis != 0:
+                    print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
                 elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
                     print("R2 pressed")
-                elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R1:
-                    print("R1 released")
                 elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R2:
                     print("R2 released")
 
