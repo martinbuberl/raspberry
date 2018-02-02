@@ -83,7 +83,7 @@ def controller_events():
                             throttle = -1.0
 
                         if throttle != -1.0:
-                            #print("throttle : {0} ".format(throttle))
+                            print("throttle : {0} ".format(throttle))
                     else:
                         up_down = JOYSTICK.get_axis(AXIS_R2)
                     if AXIS_LEFT_RIGHT_INVERTED:
@@ -113,7 +113,7 @@ def controller_events():
                         drive_left = drive_left - drive_right * TURN_MULTIPLIER
 
                     if drive_left != 1.00 or drive_right != 1.00:
-                        #print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
+                        print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
 
 
                     # Set the motors to the new speeds
