@@ -64,8 +64,13 @@ def controller_events():
                 if e.type == pygame.JOYAXISMOTION:
                     x_axis = JOYSTICK.get_axis(ANALOG_LX_AXIS)
                     y_axis = JOYSTICK.get_axis(ANALOG_LY_AXIS)
-                    #if x_axis != 0 or y_axis != 0:
-                    print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
+                    if x_axis != 0 or y_axis != 0:
+                        print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
+
+                    R2_axis = JOYSTICK.get_axis(4)
+                    if R2_axis != 1:
+                        print("R2_axis axis={:>6.3f}".format(R2_axis))
+
                 elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
                     print("R2 pressed")
                 elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R2:
