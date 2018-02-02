@@ -66,7 +66,7 @@ def controller_events():
 
                 axis_r2 = JOYSTICK.get_axis(AXIS_R2)
                 if axis_r2 > -1:
-                    print("R2 axis={:>6.3f}".format(AXIS_R2))
+                    print("R2 axis={:>6.3f}".format(axis_r2))
 
             elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
                 print("R2 pressed")
