@@ -60,34 +60,32 @@ def controller_events():
 
     try:
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.JOYAXISMOTION:
+            for e in pygame.event.get():
+                if e.type == pygame.JOYAXISMOTION:
                     x_axis = JOYSTICK.get_axis(ANALOG_LX_AXIS)
                     y_axis = JOYSTICK.get_axis(ANALOG_LY_AXIS)
                     if x_axis != 0 or y_axis != 0:
                         print("Analog stick x={:>6.3f}, y={:>6.3f}".format(x_axis, y_axis))
-                elif event.type == pygame.JOYBUTTONDOWN:
-                    if JOYSTICK.get_button(BUTTON_SQUARE):
-                        print("Square pressed")
-                    if JOYSTICK.get_button(BUTTON_CROSS):
-                        print("Cross pressed")
-                    if JOYSTICK.get_button(BUTTON_CIRCLE):
-                        print("Circle pressed")
-                    if JOYSTICK.get_button(BUTTON_TRIANGLE):
-                        print("Triangle pressed")
-                    if JOYSTICK.get_button(BUTTON_L1):
-                        print("L1 pressed")
-                    if JOYSTICK.get_button(BUTTON_L2):
-                        print("L2 pressed")
-                    if JOYSTICK.get_button(BUTTON_R1):
-                        print("R1 pressed")
-                    if JOYSTICK.get_button(BUTTON_R2):
-                        print("R2 pressed")
-                elif event.type == pygame.JOYBUTTONUP:
-                    if JOYSTICK.get_button(BUTTON_R1):
-                        print("R1 released")
-                    if JOYSTICK.get_button(BUTTON_R2):
-                        print("R2 released")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_SQUARE:
+                    print("Square pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_CROSS:
+                    print("Cross pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_CIRCLE:
+                    print("Circle pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_TRIANGLE:
+                    print("Triangle pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_L1:
+                    print("L1 pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_L2:
+                    print("L2 pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R1:
+                    print("R1 pressed")
+                elif e.type == pygame.JOYBUTTONDOWN and e.button == BUTTON_R2:
+                    print("R2 pressed")
+                elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R1:
+                    print("R1 released")
+                elif e.type == pygame.JOYBUTTONUP and e.button == BUTTON_R2:
+                    print("R2 released")
 
 #                if had_event == False:
 #                    # Read axis positions (-1 to +1)
