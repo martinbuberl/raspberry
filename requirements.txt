@@ -1,3 +1,2 @@
 ds4drv==0.5.1
 pygame==1.9.3
-setuptools==38.4.0

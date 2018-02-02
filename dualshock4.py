@@ -86,7 +86,7 @@ def controller_events():
                         up_down = JOYSTICK.get_axis(AXIS_R2)
                     if AXIS_LEFT_RIGHT_INVERTED:
                         left_right = -JOYSTICK.get_axis(AXIS_LEFT_RIGHT)
-                        print("left_right : {}".format(left_right))
+                        #print("left_right : {}".format(left_right))
                     else:
                         left_right = JOYSTICK.get_axis(AXIS_LEFT_RIGHT)
                     # Apply steering speeds
@@ -120,7 +120,7 @@ def controller_events():
 
                         drive_right = drive_right * (1.0 + (1.0 * left_right))
                         drive_left = drive_left - drive_right * TURN_MULTIPLIER
-                    print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
+                    #print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
 
 
                     # Set the motors to the new speeds
@@ -134,4 +134,4 @@ def controller_events():
         sys.exit()
 
 controller_init()
-#controller_events()
+controller_events()

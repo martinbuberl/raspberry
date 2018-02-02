@@ -10,7 +10,7 @@
 - [Download](https://www.raspberrypi.org/downloads/raspbian/) Raspian Stretch with Desktop *(Version: November 2017)*
 - Flash SD card with [Etcher](https://etcher.io/)
 - [Enable SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/) by adding an empty file `ssh` onto the SD card's **boot** partition `touch /Volumes/boot/ssh`
-- [Configure WiFi](https://raspberrypi.stackexchange.com/a/37921) by adding a file `wpa_supplicant.conf` onto the SD card's **boot** partition:
+- [Configure WiFi](https://raspberrypi.stackexchange.com/a/37921) by adding a file `wpa_supplicant.conf` onto the SD card's **boot** partition `touch /Volumes/boot/wpa_supplicant.conf`:
 ```
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
@@ -25,8 +25,20 @@ network={
 - Run `sudo raspi-config` open **Interfacing Options** and enable **VNC**
 - Connect via [VNC](https://www.realvnc.com/en/connect/download/viewer/)
 ```
+- [Upate and upgrade Raspian](https://www.raspberrypi.org/documentation/raspbian/updating.md):
+```
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get clean
+```
 
 ## Pairing with PS4 Controller
+
+```
+sudo pip ds4drv
+sudo apt-get install python-pygame
+```
+
 
 - Tp put the controller into pairing mode, press and hold the **Share** button then the **PS** button
 - After a few seconds, the light bar will strobe, indicating that the controller is now in pairing mode
