@@ -1,29 +1,29 @@
 # encoding=utf8
+from __future__ import print_function
 import time
 import os
 import sys
 import pygame
 
 
-global joystick
+global JOYSTICK
 
-axisR2 = 4 # Joystick axis to read for up / down position
-axisL2 = 6
-axisUpDownInverted = True               # Set this to True if up and down appear to be swapped
-axisLeftRight = 0                       # Joystick axis to read for left / right position
-axisLeftRightInverted = True            # Set this to True if left and right appear to be swapped
-buttonFastTurn = 9                      # Joystick button number for turning fast (R2)
-interval = 0.00 # Time between updates in seconds, smaller responds faster but uses more processor time
+AXIS_R2 = 4 # Joystick axis to read for up / down position
+AXIS_L2 = 6
+AXIS_UP_DOWN_INVERTED = True # Set this to True if up and down appear to be swapped
+AXIS_LEFT_RIGHT = 0 # Joystick axis to read for left / right position
+AXIS_LEFT_RIGHT_INVERTED = True # Set this to True if left and right appear to be swapped
+BUTTON_FAST_TURN = 9 # Joystick button number for turning fast (R2)
+INTERVAL = 0.00 # Time between updates in seconds, smaller responds faster but uses more processor time
 TURN_MULTIPLIER = 0.4
 
 
-def Dualshock4Init():
-    global joystick
-    # Setup pygame and wait for the joystick to become available
+def controller_init():
+    global JOYSTICK
+
+    print("Waiting for controller... (press CTRL+C to quit)")
     os.environ["SDL_VIDEODRIVER"] = "dummy" # Removes the need to have a GUI window
     pygame.init()
-
-    print("Waiting for joystick... (press CTRL+C to quit)")
 
     while True:
         try:
@@ -36,48 +36,28 @@ def Dualshock4Init():
                     time.sleep(0.1)
                 else:
                     # We have a joystick, attempt to initialise it!
-                    joystick = pygame.joystick.Joystick(0)
+                    JOYSTICK = pygame.joystick.Joystick(0)
                     break
             except pygame.error:
                 # Failed to connect to the joystick, toggle the LED
                 pygame.joystick.quit()
                 time.sleep(0.1)
         except KeyboardInterrupt:
-            # CTRL+C exit, give up
-            print("\nUser aborted")
             sys.exit()
-    print("Joystick found: {}".format(joystick.get_name()))
-    joystick.init()
-
-    axes = joystick.get_numaxes() # Usually axis run in pairs, up/down for one, and left/right for the other
-    print("Number of axes: {}".format(axes))
-    for i in range( axes ):
-        axis = joystick.get_axis( i )
-        print("Axis {} value: {:>6.3f}".format(i, axis))
-    buttons = joystick.get_numbuttons()
-    print("Number of buttons: {}".format(buttons))
-    for i in range( buttons ):
-        button = joystick.get_button( i )
-        print("Button {:>2} value: {}".format(i,button))
-    hats = joystick.get_numhats() # Hat switch. All or nothing for direction, not like joysticks. Value comes back in an array.
-    print("Number of hats: {}".format(hats))
-    for i in range( hats ):
-        hat = joystick.get_hat( i )
-        print("Hat {} value: {}".format(i, str(hat)))
+    print("Controller found: {}".format(JOYSTICK.get_name()))
+    JOYSTICK.init()
 
 
-def RobotControl():
-    global joystick
+def controller_events():
+    global JOYSTICK
 
     try:
         print("Press CTRL+C to quit")
-        driveLeft = 0.0
-        driveRight = 0.0
-        #running = True
-        #hadEvent = False
-        upDown = 0.0
-        leftRight = 0.0
-        # Loop indefinitely
+        drive_left = 0.0
+        drive_right = 0.0
+        up_down = 0.0
+        left_right = 0.0
+
         while True:
             # Get the latest events from the system
             had_event = False
@@ -96,41 +76,41 @@ def RobotControl():
 
                 if had_event:
                     # Read axis positions (-1 to +1)
-                    if axisUpDownInverted:
-                        upDown = -joystick.get_axis(axisR2)  # release --> 1     half 0     full press --> -1
-                        throttle = upDown - 1
+                    if AXIS_UP_DOWN_INVERTED:
+                        up_down = -JOYSTICK.get_axis(AXIS_R2)  # release --> 1     half 0     full press --> -1
+                        throttle = up_down - 1
                         if throttle < -1.0:
                             throttle = -1.0
                         print("throttle : {0} ".format(throttle))
                     else:
-                        upDown = joystick.get_axis(axisR2)
-                    if axisLeftRightInverted:
-                        leftRight = -joystick.get_axis(axisLeftRight)
-                        print("leftRight : {}".format(leftRight))
+                        up_down = JOYSTICK.get_axis(AXIS_R2)
+                    if AXIS_LEFT_RIGHT_INVERTED:
+                        left_right = -JOYSTICK.get_axis(AXIS_LEFT_RIGHT)
+                        print("left_right : {}".format(left_right))
                     else:
-                        leftRight = joystick.get_axis(axisLeftRight)
+                        left_right = JOYSTICK.get_axis(AXIS_LEFT_RIGHT)
                     # Apply steering speeds
-                    if not joystick.get_button(buttonFastTurn):
-                        leftRight *= 1
+                    if not JOYSTICK.get_button(BUTTON_FAST_TURN):
+                        left_right *= 1
 
                     # Determine the drive power levels
-                    if joystick.get_button(axisL2): # to REVERSE the car
-                        driveLeft = throttle
-                        driveRight = throttle
+                    if JOYSTICK.get_button(AXIS_L2): # to REVERSE the car
+                        drive_left = throttle
+                        drive_right = throttle
                     else:                                   # to move FORWARD
-                        driveLeft = -throttle
-                        driveRight = -throttle
+                        drive_left = -throttle
+                        drive_right = -throttle
 
-                    if leftRight < -0.05:
+                    if left_right < -0.05:
                         # Turning right
                         #IN1.on()
                         #IN2.off()
                         #IN3.off()
                         #IN4.on()
 
-                        driveLeft = driveLeft*( 1.0 - (1.0 * leftRight))
-                        driveRight = driveRight - driveLeft*TURN_MULTIPLIER
-                    elif leftRight > 0.05:
+                        drive_left = drive_left * (1.0 - (1.0 * left_right))
+                        drive_right = drive_right - drive_left * TURN_MULTIPLIER
+                    elif left_right > 0.05:
                         # Turning left
 
                         #IN1.off()
@@ -138,9 +118,9 @@ def RobotControl():
                         #IN3.on()
                         #IN4.off()
 
-                        driveRight= driveRight*( 1.0 + (1.0 * leftRight))
-                        driveLeft= driveLeft - driveRight*TURN_MULTIPLIER
-                    print("driveL :{0:.2f} || driveR : {1:.2f} ".format(driveLeft,driveRight))
+                        drive_right = drive_right * (1.0 + (1.0 * left_right))
+                        drive_left = drive_left - drive_right * TURN_MULTIPLIER
+                    print("driveL :{0:.2f} || driveR : {1:.2f} ".format(drive_left, drive_right))
 
 
                     # Set the motors to the new speeds
@@ -148,11 +128,10 @@ def RobotControl():
                     #ENB.value = driveRight
 
             # Wait for the interval period
-            time.sleep(interval) # default = 0
+            time.sleep(INTERVAL) # default = 0
 
     except KeyboardInterrupt:
-        # CTRL+C exit, disable all drives
-        print("shutting down...")
+        sys.exit()
 
-Dualshock4Init()
-#RobotControl()
+controller_init()
+#controller_events()
