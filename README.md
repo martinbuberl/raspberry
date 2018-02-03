@@ -71,12 +71,17 @@ You're paired :)
 Read more about it [here](https://github.com/retropie/retropie-setup/wiki/PS4-Controller#general-controller-usage)
 
 
-
-
-
-
-
 ## Build Tensorflow
+
+```
+pip install numpy
+pip install tensorflow
+pip install pandas
+```
+
+
+
+
 
 https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/makefile
 
