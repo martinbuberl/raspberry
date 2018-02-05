@@ -70,6 +70,19 @@ You're paired :)
 
 Read more about it [here](https://github.com/retropie/retropie-setup/wiki/PS4-Controller#general-controller-usage)
 
+## Start it automatically
+
+Open your `rc.local` file `sudo nano /etc/rc.local` and add the following above the `exit 0` line, so it looks like this:
+
+```
+sudo /usr/local/bin/ds4drv &
+exit 0
+```
+https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/
+https://www.raspberrypi.org/documentation/linux/usage/rc-local.md
+https://github.com/macunixs/dualshock4-pi
+
+
 
 ## Build Tensorflow
 
