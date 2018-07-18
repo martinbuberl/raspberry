@@ -17,15 +17,15 @@ var client = {
       self.readCamera();
     };
 
-        // Currently, all returned messages are video data. However, this is
-        // extensible with full-spec JSON-RPC.
-        this.socket.onmessage = function (messageEvent) {
-            video.src = "data:image/jpeg;base64," + messageEvent.data;
-        };
-    },
+    // Currently, all returned messages are video data. However, this is
+    // extensible with full-spec JSON-RPC.
+    this.socket.onmessage = function (messageEvent) {
+      video.src = "data:image/jpeg;base64," + messageEvent.data;
+    };
+  },
 
-    // Requests video stream
-    readCamera: function () {
-      this.socket.send("read_camera");
-    }
+  // Requests video stream
+  readCamera: function () {
+    this.socket.send("read_camera");
+  }
 };
