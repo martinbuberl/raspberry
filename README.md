@@ -12,3 +12,23 @@ sudo raspi-config
 sudo poweroff
 sudo reboot
 ```
+
+# Mount file system via SSHFS
+
+SSHFS allows you to mount the Raspberry Pi's file system on your local machine.
+
+First, install sshfs on your Mac using `$ brew install sshfs`.
+
+Mount the Raspberry Pi's file system to your local directory `pi`:
+`sshfs pi@192.168.86.40: pi`
+
+Unmount it via:
+`umount pi`
+Remove folder:
+`rmdir pi`
+
+Troubleshooting
+```
+pgrep -lf sshfs
+kill -9 <process_id>
+```
