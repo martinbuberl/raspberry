@@ -1,13 +1,7 @@
 #!/usr/bin/env python
-"""
-Creates an HTTP server with basic auth and websocket communication.
-"""
 import argparse
 import base64
-import hashlib
 import os
-import time
-import threading
 import webbrowser
 
 try:
