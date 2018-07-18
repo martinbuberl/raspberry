@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 import argparse
 import base64
+import io
 import os
 import webbrowser
 
-try:
-    import cStringIO as io
-except ImportError:
-    import io
-
+import picamera
 import tornado.web
 import tornado.websocket
 from tornado.ioloop import PeriodicCallback
@@ -39,14 +36,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 
     def loop(self):
         """Sends camera images in an infinite loop."""
-        sio = io.StringIO()
-
-        if args.use_usb:
-            _, frame = camera.read()
-            img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            img.save(sio, "JPEG")
-        else:
-            camera.capture(sio, "jpeg", use_video_port=True)
+        sio = io.BytesIO()
+        camera.capture(sio, "jpeg", use_video_port=True)
 
         try:
             self.write_message(base64.b64encode(sio.getvalue()))
@@ -60,29 +51,16 @@ parser.add_argument("--port", type=int, default=8000, help="The "
                     "port on which to serve the website.")
 parser.add_argument("--resolution", type=str, default="low", help="The "
                     "video resolution. Can be high, medium, or low.")
-parser.add_argument("--use-usb", action="store_true", help="Use a USB "
-                    "webcam instead of the standard Pi camera.")
-parser.add_argument("--usb-id", type=int, default=0, help="The "
-                     "usb camera number to display")
 args = parser.parse_args()
 
-if args.use_usb:
-    import cv2
-    from PIL import Image
-    camera = cv2.VideoCapture(args.usb_id)
-else:
-    import picamera
-    camera = picamera.PiCamera()
-    camera.start_preview()
+
+
+camera = picamera.PiCamera()
+camera.start_preview()
 
 resolutions = {"high": (1280, 720), "medium": (640, 480), "low": (320, 240)}
 if args.resolution in resolutions:
-    if args.use_usb:
-        w, h = resolutions[args.resolution]
-        camera.set(3, w)
-        camera.set(4, h)
-    else:
-        camera.resolution = resolutions[args.resolution]
+    camera.resolution = resolutions[args.resolution]
 else:
     raise Exception("%s not in resolution options." % args.resolution)
 

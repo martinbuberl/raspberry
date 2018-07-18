@@ -30,28 +30,20 @@ Installation
 Camp uses [tornado](http://www.tornadoweb.org/en/stable/) to create a
 web server. It can interact with the [Pi camera](http://www.adafruit.com/products/1367)
 with the aptly named [picamera](http://picamera.readthedocs.org/en/release-1.7/)
-module, or it can use USB webcams with [opencv](http://opencv.org/)
-and [Pillow](http://pillow.readthedocs.org/en/latest/installation.html). The
-command below installs both sets of dependencies.
+module. The command below installs the dependencies.
 
 ```
-sudo apt-get install python-dev python-pip python-opencv libjpeg-dev
-sudo pip install tornado Pillow picamera
+sudo apt-get install python-dev python-pip libjpeg-dev
+sudo pip3 install tornado
 ```
 
-Once the dependencies are installed on your pi, you can clone this repository and
-run the server.
+Once the dependencies are installed on your pi, you can run the server.
 
 ```
-git clone https://github.com/patrickfuller/camp.git
-python camp/server.py
+python3 server.py
 ```
 
 Navigate to http://your.r.pi.ip:8000 and check out your webcam.
-
-####USB Camera
-
-Use with `python server.py --use-usb`.
 
 ####Run on startup
 
