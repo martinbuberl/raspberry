@@ -3,8 +3,6 @@ camp
 
 Another Raspberry Pi camera webserver.
 
-![](img/example.png)
-
 What it does
 ============
 
@@ -19,7 +17,6 @@ which works great in many use cases. However, I wanted something simpler. Namely
 I wanted:
 
  * Minimal configuration
- * Password protection
  * One-way streaming
  * Easily customizable webpage
  * Extensible server
@@ -56,26 +53,6 @@ Navigate to http://your.r.pi.ip:8000 and check out your webcam.
 
 Use with `python server.py --use-usb`.
 
-####Password
-
-![](img/login.png)
-
-With the `--require-login` flag, camp will open a login page before allowing
-webcam access.
-
-The default password is "raspberry". In order to change it, run this in your
-camp directory:
-
-```
-python -c "import hashlib; import getpass; print(hashlib.sha512(getpass.getpass())).hexdigest()" > password.txt
-```
-
-This will prompt you for a password, encrypt it, and save the result in
-`password.txt`.
-
-Note that this level of password protection is basic - it's fine for keeping the
-occasional stranger out, but won't stand up to targeted hacking.
-
 ####Run on startup
 
 It's nice to have your pi start camp whenever it turns on. Let's make that
@@ -86,7 +63,7 @@ the right file.
 
 ####Customization
 
-The website consists of `index.html`, `login.html`, and `style.css`. These can be
+The website consists of `index.html` and `style.css`. These can be
 edited to change the look of camp.
 
 If you want to add in extra functionality, edit `client.js` and `server.py`.

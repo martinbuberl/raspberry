@@ -19,40 +19,14 @@ import tornado.web
 import tornado.websocket
 from tornado.ioloop import PeriodicCallback
 
-# Hashed password for comparison and a cookie for login cache
+
 ROOT = os.path.normpath(os.path.dirname(__file__))
-with open(os.path.join(ROOT, "password.txt")) as in_file:
-    PASSWORD = in_file.read().strip()
-COOKIE_NAME = "camp"
 
 
 class IndexHandler(tornado.web.RequestHandler):
 
     def get(self):
-        if args.require_login and not self.get_secure_cookie(COOKIE_NAME):
-            self.redirect("/login")
-        else:
-            self.render("index.html", port=args.port)
-
-
-class LoginHandler(tornado.web.RequestHandler):
-
-    def get(self):
-        self.render("login.html")
-
-    def post(self):
-        password = self.get_argument("password", "")
-        if hashlib.sha512(password).hexdigest() == PASSWORD:
-            self.set_secure_cookie(COOKIE_NAME, str(time.time()))
-            self.redirect("/")
-        else:
-            time.sleep(1)
-            self.redirect(u"/login?error")
-
-
-class ErrorHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.send_error(status_code=403)
+        self.render("index.html", port=args.port)
 
 
 class WebSocket(tornado.websocket.WebSocketHandler):
@@ -62,11 +36,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 
         # Start an infinite loop when this is called
         if message == "read_camera":
-            if not args.require_login or self.get_secure_cookie(COOKIE_NAME):
-                self.camera_loop = PeriodicCallback(self.loop, 10)
-                self.camera_loop.start()
-            else:
-                print("Unauthenticated websocket request")
+            self.camera_loop = PeriodicCallback(self.loop, 10)
+            self.camera_loop.start()
 
         # Extensibility for other methods
         else:
@@ -95,8 +66,6 @@ parser.add_argument("--port", type=int, default=8000, help="The "
                     "port on which to serve the website.")
 parser.add_argument("--resolution", type=str, default="low", help="The "
                     "video resolution. Can be high, medium, or low.")
-parser.add_argument("--require-login", action="store_true", help="Require "
-                    "a password to log in to webserver.")
 parser.add_argument("--use-usb", action="store_true", help="Use a USB "
                     "webcam instead of the standard Pi camera.")
 parser.add_argument("--usb-id", type=int, default=0, help="The "
@@ -123,11 +92,10 @@ if args.resolution in resolutions:
 else:
     raise Exception("%s not in resolution options." % args.resolution)
 
-handlers = [(r"/", IndexHandler), (r"/login", LoginHandler),
+handlers = [(r"/", IndexHandler),
             (r"/websocket", WebSocket),
-            (r"/static/password.txt", ErrorHandler),
             (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': ROOT})]
-application = tornado.web.Application(handlers, cookie_secret=PASSWORD)
+application = tornado.web.Application(handlers)
 application.listen(args.port)
 
 webbrowser.open("http://localhost:%d/" % args.port, new=2)
