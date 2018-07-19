@@ -12,6 +12,7 @@ from tornado.ioloop import PeriodicCallback
 
 
 ROOT = os.path.normpath(os.path.dirname(__file__))
+RESOLUTIONS = {"high": (1280, 720), "medium": (640, 480), "low": (320, 240)}
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -45,22 +46,17 @@ class WebSocket(tornado.websocket.WebSocketHandler):
             self.camera_loop.stop()
 
 
-parser = argparse.ArgumentParser(description="Starts a webserver that "
-                                 "connects to a webcam.")
-parser.add_argument("--port", type=int, default=8000, help="The "
-                    "port on which to serve the website.")
-parser.add_argument("--resolution", type=str, default="low", help="The "
-                    "video resolution. Can be high, medium, or low.")
+parser = argparse.ArgumentParser(description="Starts a webserver that connects to a webcam.")
+parser.add_argument("--port", type=int, default=8000, help="The port on which to serve the website.")
+parser.add_argument("--resolution", type=str, default="low", help="The video resolution. Can be high, medium, or low.")
 args = parser.parse_args()
-
 
 
 camera = picamera.PiCamera()
 camera.start_preview()
 
-resolutions = {"high": (1280, 720), "medium": (640, 480), "low": (320, 240)}
-if args.resolution in resolutions:
-    camera.resolution = resolutions[args.resolution]
+if args.resolution in RESOLUTIONS:
+    camera.resolution = RESOLUTIONS[args.resolution]
 else:
     raise Exception("%s not in resolution options." % args.resolution)
 
