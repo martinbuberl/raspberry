@@ -13,6 +13,10 @@ sudo poweroff
 sudo reboot
 ```
 
+# rsync files via SSH
+
+`rsync -avz -e ssh src/pi pi@192.168.86.40:src`
+
 # Mount file system via SSHFS
 
 SSHFS allows you to mount the Raspberry Pi's file system on your local machine.
